@@ -1,25 +1,27 @@
-function ResourcePanel({ count }) {
-  const resources = [
-    { label: "Water", needed: count * 3, unit: "L", available: 500 },
-    { label: "Meals", needed: count * 3, unit: "", available: 400 },
-    { label: "Blankets", needed: count, unit: "", available: 60 },
-    { label: "Medical Kits", needed: Math.floor(count / 10), unit: "", available: 12 },
-    { label: "Volunteers", needed: Math.ceil(count / 15), unit: "", available: 3 },
+function ResourcePanel({ resources }) { // Make sure 'resources' is inside these braces
+  
+  // This is why it says "Loading..." - we need to make sure 'resources' exists
+  if (!resources || Object.keys(resources).length === 0) {
+    return <div className="text-slate-400 p-5 italic">Connecting to Resource Data...</div>;
+  }
+
+  const resourceList = [
+    { label: "Water", needed: resources.water, unit: "L", available: 500 },
+    { label: "Meals", needed: resources.meals, unit: "", available: 400 },
+    { label: "Blankets", needed: resources.blankets, unit: "", available: 60 },
+    { label: "Medical Kits", needed: resources.medical, unit: "", available: 12 },
+    { label: "Volunteers", needed: resources.volunteers, unit: "", available: 3 },
   ];
+  
+  // ... rest of her table code ...
 
   return (
     <div className="bg-[#1e293b] rounded-xl p-5">
-      <h3 className="font-semibold text-white mb-3">Resource Status</h3>
+      <h3 className="font-semibold text-white mb-3 text-xs uppercase tracking-widest text-slate-400">Resource Status</h3>
       <table className="w-full text-sm">
-        <thead>
-          <tr className="text-slate-500 text-xs uppercase">
-            <th className="text-left pb-2">Resource</th>
-            <th className="text-right pb-2">Needed</th>
-            <th className="text-right pb-2">Available</th>
-          </tr>
-        </thead>
+        {/* ... table header stays same ... */}
         <tbody>
-          {resources.map((r) => {
+          {resourceList.map((r) => {
             const deficit = r.available < r.needed;
             return (
               <tr key={r.label} className={deficit ? "text-red-400" : "text-slate-300"}>
@@ -34,5 +36,4 @@ function ResourcePanel({ count }) {
     </div>
   );
 }
-
 export default ResourcePanel;

@@ -1,11 +1,15 @@
 import { useState } from "react";
 
-const areas = ["Whitefield", "Marathahalli", "Yelahanka", "Hebbal", "Electronic City", "Koramangala"];
+const areas = ["Whitefield", "Marathahalli", "Yelahanka", "Hebbal", "Electronic City", "Koramangala", "Rajajinagar"];
 
 const subLocations = {
   "Whitefield": [
-    { name: "Whitefield — ITPL", lat: 12.9856, lng: 77.7272 },
-    { name: "Whitefield — Kadugodi", lat: 12.9980, lng: 77.7508 },
+    { name: "Whitefield — ITPL Gate", lat: 12.9856, lng: 77.7272 },
+    { name: "Whitefield — Kadugodi Metro", lat: 12.9980, lng: 77.7508 },
+    { name: "Vydehi Hospital Area", lat: 12.9868, lng: 77.7275 },
+    { name: "Hope Farm Junction", lat: 12.9875, lng: 77.7539 },
+    { name: "Forum Shantiniketan Mall", lat: 12.9955, lng: 77.7295 },
+    { name: "Prestige Shantiniketan", lat: 12.9921, lng: 77.7294 },
   ],
   "Marathahalli": [
     { name: "Marathahalli — Bridge", lat: 12.9591, lng: 77.6974 },
@@ -18,14 +22,36 @@ const subLocations = {
   "Hebbal": [
     { name: "Hebbal — Flyover", lat: 13.0359, lng: 77.5970 },
     { name: "Hebbal — Kempapura", lat: 13.0450, lng: 77.5900 },
+    { name: "Hebbal Flyover", lat: 13.0353, lng: 77.5976 },
+    { name: "Manyata Tech Park Gate", lat: 13.0487, lng: 77.6206 },
+    { name: "Hebbal Lake Park", lat: 13.0400, lng: 77.6000 },
+    { name: "Esteem Mall Junction", lat: 13.0415, lng: 77.5960 },
+    { name: "Aster CMI Hospital Area", lat: 13.0336, lng: 77.5970 },
+    { name: "Hebbal Railway Station", lat: 13.0357, lng: 77.5979 },
   ],
   "Electronic City": [
-    { name: "Electronic City — Phase 1", lat: 12.8399, lng: 77.6770 },
-    { name: "Electronic City — Phase 2", lat: 12.8283, lng: 77.6746 },
+    { name: "Infosys Campus Gate", lat: 12.8452, lng: 77.6630 },
+    { name: "Narayana Health City", lat: 12.8351, lng: 77.6623 },
+    { name: "Neeladri Road", lat: 12.8406, lng: 77.6768 },
+    { name: "Electronic City Phase 1 Bus Stop", lat: 12.8441, lng: 77.6649 },
+    { name: "TCS Gate", lat: 12.8394, lng: 77.6690 },
+    { name: "Wipro Campus Junction", lat: 12.8401, lng: 77.6717 },
   ],
   "Koramangala": [
-    { name: "Koramangala — 5th Block", lat: 12.9279, lng: 77.6271 },
-    { name: "Koramangala — 8th Block", lat: 12.9347, lng: 77.6205 },
+    { name: "Forum Mall", lat: 12.9346, lng: 77.6110 },
+    { name: "Sony Signal", lat: 12.9352, lng: 77.6245 },
+    { name: "St Johns Junction", lat: 12.9345, lng: 77.6200 },
+    { name: "Jyoti Nivas College Road", lat: 12.9290, lng: 77.6150 },
+    { name: "Koramangala Indoor Stadium", lat: 12.9288, lng: 77.6208 },
+    { name: "Wipro Park Area", lat: 12.9313, lng: 77.6241 },
+  ],
+  "Rajajinagar": [
+    { name: "Orion Mall", lat: 12.9916, lng: 77.5553 },
+    { name: "ISKCON Temple", lat: 12.9955, lng: 77.5512 },
+    { name: "Dr Rajkumar Road Metro", lat: 12.9913, lng: 77.5526 },
+    { name: "ESI Hospital Junction", lat: 12.9911, lng: 77.5550 },
+    { name: "Navrang Theatre Signal", lat: 12.9938, lng: 77.5529 },
+    { name: "Rajajinagar 5th Block Market", lat: 12.9960, lng: 77.5565 },
   ],
 };
 
