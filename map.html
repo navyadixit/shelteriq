@@ -1,0 +1,276 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Bengaluru Disaster Dashboard Map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <style>
+        #map { height: 100vh; }
+    </style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+// ================= MAP SETUP =================
+var map = L.map('map').setView([12.9716, 77.5946], 11);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap'
+}).addTo(map);
+
+
+
+// ================= DAMAGE LOCATIONS =================
+var damage_locations = {
+"Whitefield":[
+{name:"ITPL Gate",lat:12.9866,lng:77.7373},
+{name:"Vydehi Hospital Area",lat:12.9868,lng:77.7275},
+{name:"Hope Farm Junction",lat:12.9875,lng:77.7539},
+{name:"Forum Shantiniketan Mall",lat:12.9955,lng:77.7295},
+{name:"Kadugodi Metro",lat:12.9981,lng:77.7580},
+{name:"Prestige Shantiniketan",lat:12.9921,lng:77.7294}
+],
+"Electronic City":[
+{name:"Infosys Campus Gate",lat:12.8452,lng:77.6630},
+{name:"Narayana Health City",lat:12.8351,lng:77.6623},
+{name:"Neeladri Road",lat:12.8406,lng:77.6768},
+{name:"Electronic City Phase 1 Bus Stop",lat:12.8441,lng:77.6649},
+{name:"TCS Gate",lat:12.8394,lng:77.6690},
+{name:"Wipro Campus Junction",lat:12.8401,lng:77.6717}
+],
+"Hebbal":[
+{name:"Hebbal Flyover",lat:13.0353,lng:77.5976},
+{name:"Manyata Tech Park Gate",lat:13.0487,lng:77.6206},
+{name:"Hebbal Lake Park",lat:13.0400,lng:77.6000},
+{name:"Esteem Mall Junction",lat:13.0415,lng:77.5960},
+{name:"Aster CMI Hospital Area",lat:13.0336,lng:77.5970},
+{name:"Hebbal Railway Station",lat:13.0357,lng:77.5979}
+],
+"Koramangala":[
+{name:"Forum Mall",lat:12.9346,lng:77.6110},
+{name:"Sony Signal",lat:12.9352,lng:77.6245},
+{name:"St Johns Junction",lat:12.9345,lng:77.6200},
+{name:"Jyoti Nivas College Road",lat:12.9290,lng:77.6150},
+{name:"Koramangala Indoor Stadium",lat:12.9288,lng:77.6208},
+{name:"Wipro Park Area",lat:12.9313,lng:77.6241}
+],
+"Yelahanka":[
+{name:"Yelahanka New Town Bus Stand",lat:13.1007,lng:77.5963},
+{name:"RMZ Galleria Mall",lat:13.0945,lng:77.5967},
+{name:"Yelahanka Railway Station",lat:13.1024,lng:77.5974},
+{name:"Air Force Station Road",lat:13.1050,lng:77.6065},
+{name:"NES College Junction",lat:13.0968,lng:77.5984},
+{name:"Attur Lake Area",lat:13.1085,lng:77.6012}
+],
+"Rajajinagar":[
+{name:"Orion Mall",lat:12.9916,lng:77.5553},
+{name:"ISKCON Temple",lat:12.9955,lng:77.5512},
+{name:"Dr Rajkumar Road Metro",lat:12.9913,lng:77.5526},
+{name:"ESI Hospital Junction",lat:12.9911,lng:77.5550},
+{name:"Navrang Theatre Signal",lat:12.9938,lng:77.5529},
+{name:"Rajajinagar 5th Block Market",lat:12.9960,lng:77.5565}
+]
+};
+
+for (let area in damage_locations){
+    damage_locations[area].forEach(loc=>{
+        L.marker([loc.lat,loc.lng])
+         .addTo(map)
+         .bindPopup(`<b>Damage Site</b><br>${loc.name}<br>${area}`);
+    });
+}
+
+
+
+// ================= SHELTERS =================
+var shelters = [
+{name:"Shelter Alpha",lat:12.9763,lng:77.5929,capacity:45,count:0},
+{name:"Shelter Beta",lat:12.9507,lng:77.5848,capacity:60,count:45},
+{name:"Shelter Gamma",lat:12.9716,lng:77.5946,capacity:50,count:110},
+{name:"Shelter Delta",lat:13.1007,lng:77.5963,capacity:40,count:60},
+{name:"Shelter Epsilon",lat:12.9698,lng:77.7500,capacity:60,count:72},
+{name:"Shelter Zeta",lat:12.8399,lng:77.6770,capacity:80,count:95},
+{name:"Shelter Eta",lat:12.9916,lng:77.5553,capacity:100,count:50},
+{name:"Shelter Theta",lat:13.0359,lng:77.5970,capacity:120,count:65},
+{name:"Shelter Iota",lat:12.9279,lng:77.6271,capacity:75,count:88},
+{name:"Shelter Kappa",lat:12.9250,lng:77.5468,capacity:70,count:54},
+{name:"Shelter Lambda",lat:13.0100,lng:77.6950,capacity:70,count:102}
+];
+
+function getShelterColor(count,cap){
+    if(count>=cap) return "red";
+    if(count>=cap*0.7) return "orange";
+    return "green";
+}
+
+shelters.forEach(s=>{
+    let c=getShelterColor(s.count,s.capacity);
+    L.circleMarker([s.lat,s.lng],{
+        radius:8,
+        color:c,
+        fillColor:c,
+        fillOpacity:0.9
+    })
+    .addTo(map)
+    .bindPopup(`<b>${s.name}</b><br>${s.count}/${s.capacity} people`);
+});
+
+
+
+// ================= HOSPITALS =================
+var hospitals = [
+{name:"Victoria Hospital",lat:12.9601,lng:77.5733},
+{name:"Bowring & Lady Curzon Hospital",lat:12.9784,lng:77.6030},
+{name:"St Johns Medical College Hospital",lat:12.9345,lng:77.6200},
+{name:"NIMHANS",lat:12.9430,lng:77.5968},
+{name:"Manipal Hospital Old Airport Road",lat:12.9583,lng:77.6498},
+{name:"Apollo Hospital Bannerghatta Road",lat:12.8960,lng:77.5995},
+{name:"Fortis Hospital Bannerghatta Road",lat:12.8914,lng:77.5979},
+{name:"Columbia Asia Hospital Hebbal",lat:13.0350,lng:77.5986},
+{name:"Aster CMI Hospital Hebbal",lat:13.0336,lng:77.5970},
+{name:"Sakra World Hospital",lat:12.9542,lng:77.6896},
+{name:"Cloudnine Hospital Jayanagar",lat:12.9296,lng:77.5830},
+{name:"MS Ramaiah Memorial Hospital",lat:13.0298,lng:77.5662},
+{name:"KIMS Hospital KR Road",lat:12.9513,lng:77.5730},
+{name:"Vydehi Hospital Whitefield",lat:12.9868,lng:77.7275},
+{name:"ESI Hospital Rajajinagar",lat:12.9911,lng:77.5550}
+];
+
+hospitals.forEach(h=>{
+    L.circleMarker([h.lat,h.lng],{
+        radius:7,
+        color:"blue",
+        fillColor:"blue",
+        fillOpacity:0.8
+    })
+    .addTo(map)
+    .bindPopup(`<b>Hospital</b><br>${h.name}`);
+});
+
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Damage Feed Map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <style>
+        #map { height: 100vh; }
+    </style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+// Map setup
+var map = L.map('map').setView([12.9716,77.5946],11);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap'
+}).addTo(map);
+
+
+// ================= DAMAGE CSV DATA =================
+var damageFeed = [
+
+{img:"dataset/damage_feed/1.jpg",name:"Whitefield — ITPL Gate",lat:12.9866,lng:77.7373},
+{img:"dataset/damage_feed/2.jpg",name:"Electronic City — Infosys Gate",lat:12.8452,lng:77.6630},
+{img:"dataset/damage_feed/3.jpg",name:"Hebbal — Manyata Tech Park",lat:13.0487,lng:77.6206},
+{img:"dataset/damage_feed/4.jpg",name:"Rajajinagar — Orion Mall",lat:12.9916,lng:77.5553},
+{img:"dataset/damage_feed/5.jpg",name:"Koramangala — Forum Mall",lat:12.9346,lng:77.6110},
+{img:"dataset/damage_feed/6.jpg",name:"Yelahanka — Air Force Road",lat:13.1050,lng:77.6065},
+{img:"dataset/damage_feed/7.jpg",name:"Jayanagar — 4th Block",lat:12.9252,lng:77.5938},
+{img:"dataset/damage_feed/8.jpg",name:"Banashankari — BDA Complex",lat:12.9180,lng:77.5460},
+{img:"dataset/damage_feed/9.jpg",name:"Marathahalli — Bridge",lat:12.9591,lng:77.6974},
+{img:"dataset/damage_feed/10.jpg",name:"KR Puram — Old Madras Road",lat:13.0050,lng:77.6963},
+{img:"dataset/damage_feed/11.jpg",name:"Hebbal — Flyover",lat:13.0353,lng:77.5976},
+{img:"dataset/damage_feed/12.jpg",name:"Koramangala — Sony Signal",lat:12.9352,lng:77.6245},
+{img:"dataset/damage_feed/13.jpg",name:"Yelahanka — New Town",lat:13.1007,lng:77.5963},
+{img:"dataset/damage_feed/14.jpg",name:"Whitefield — Hope Farm",lat:12.9875,lng:77.7539},
+{img:"dataset/damage_feed/15.jpg",name:"Electronic City — Phase 2",lat:12.8350,lng:77.6750},
+{img:"dataset/damage_feed/16.jpg",name:"HSR Layout — Sector 2",lat:12.9116,lng:77.6370},
+{img:"dataset/damage_feed/17.jpg",name:"Indiranagar — 100 Feet Road",lat:12.9784,lng:77.6408},
+{img:"dataset/damage_feed/h1.png",name:"Sadashivanagar — Palace Road",lat:13.0050,lng:77.5750},
+{img:"dataset/damage_feed/h2.png",name:"JP Nagar — 7th Phase",lat:12.8980,lng:77.5850},
+{img:"dataset/damage_feed/h3.png",name:"Kalyan Nagar — HRBR Layout",lat:13.0280,lng:77.6480},
+{img:"dataset/damage_feed/h4.jpg",name:"Bannerghatta Road — Gottigere",lat:12.8470,lng:77.5960},
+{img:"dataset/damage_feed/h5.jpg",name:"Malleswaram — 8th Cross",lat:13.0030,lng:77.5650},
+{img:"dataset/damage_feed/low1.jpg",name:"Vijayanagar — Chord Road",lat:12.9710,lng:77.5310},
+{img:"dataset/damage_feed/low2.jpg",name:"RT Nagar — Main Road",lat:13.0220,lng:77.5950},
+{img:"dataset/damage_feed/low3.jpg",name:"Nagarbhavi — Circle",lat:12.9580,lng:77.5080},
+{img:"dataset/damage_feed/low4.jpg",name:"Yelahanka — RMZ Galleria",lat:13.0945,lng:77.5967},
+{img:"dataset/damage_feed/low5.jpg",name:"Whitefield — Kadugodi",lat:12.9981,lng:77.7580},
+{img:"dataset/damage_feed/low6.jpg",name:"Rajajinagar — 5th Block",lat:12.9960,lng:77.5565},
+{img:"dataset/damage_feed/low7.jpg",name:"Hebbal — Lake Park",lat:13.0400,lng:77.6000},
+{img:"dataset/damage_feed/low8.jpg",name:"Electronic City — Neeladri Road",lat:12.8406,lng:77.6768},
+{img:"dataset/damage_feed/low9.jpg",name:"Domlur — Inner Ring Road",lat:12.9600,lng:77.6380},
+{img:"dataset/damage_feed/m6.jpg",name:"Cunningham Road — Central",lat:12.9900,lng:77.5980},
+{img:"dataset/damage_feed/med1.jpg",name:"Bommanahalli — Ring Road",lat:12.8950,lng:77.6270},
+{img:"dataset/damage_feed/med2.jpg",name:"Thanisandra — Main Road",lat:13.0560,lng:77.6270},
+{img:"dataset/damage_feed/med3.jpg",name:"Sarjapur Road — Outer Ring",lat:12.9080,lng:77.6760},
+{img:"dataset/damage_feed/med4.jpg",name:"Dollars Colony — RMV",lat:13.0180,lng:77.5870},
+{img:"dataset/damage_feed/med5.jpg",name:"Kengeri — Satellite Town",lat:12.9130,lng:77.4820},
+{img:"dataset/damage_feed/med7.jpg",name:"Hennur — Main Road",lat:13.0430,lng:77.6320},
+{img:"dataset/damage_feed/med8.jpg",name:"BTM Layout — 2nd Stage",lat:12.9160,lng:77.6100},
+{img:"dataset/damage_feed/low3.jpg",name:"Nelamangala — Highway Junction",lat:13.1010,lng:77.3900},
+{img:"dataset/damage_feed/med5.jpg",name:"Nelamangala — Market Area",lat:13.0980,lng:77.4020},
+
+{img:"dataset/damage_feed/h3.png",name:"Jigani — Industrial Area",lat:12.7850,lng:77.6460},
+{img:"dataset/damage_feed/med3.jpg",name:"Jigani — APC Circle",lat:12.7810,lng:77.6410},
+
+{img:"dataset/damage_feed/low8.jpg",name:"Sarjapur — Town Center",lat:12.8600,lng:77.7850},
+{img:"dataset/damage_feed/h4.jpg",name:"Sarjapur — Main Road Collapse",lat:12.8570,lng:77.7700},
+
+{img:"dataset/damage_feed/med2.jpg",name:"Bidadi — Industrial Zone",lat:12.8000,lng:77.3900},
+{img:"dataset/damage_feed/low1.jpg",name:"Bidadi — Bus Stand",lat:12.7970,lng:77.3980},
+{img:"dataset/damage_feed/med9.jpg",name:"Hosur Road — Silk Board",lat:12.9170,lng:77.6220},
+// ----- PES ELECTRONIC CITY CAMPUS (CORRECTED) -----
+
+{img:"dataset/damage_feed/h4.jpg",name:"PES Campus — Main Academic Block Damage",lat:12.861491392263751,lng:77.66473479803018},
+
+{img:"dataset/damage_feed/med3.jpg",name:"PES Campus — Admin Wing Cracks",lat:12.862839,lng:77.666162},
+
+{img:"dataset/damage_feed/h3.png",name:"PES Campus — Parking Structure Failure",lat:12.863833093948626 ,lng:77.6661834688842},
+
+{img:"dataset/damage_feed/med2.jpg",name:"PES Campus — Pathway Surface Break",lat:12.862410576068834,lng:77.66672526741425},
+
+{img:"dataset/damage_feed/h1.png",name:"PES Campus — Hostel Block Tilt",lat:12.861955589574704,lng: 77.66486917167985},
+
+{img:"dataset/damage_feed/med1.jpg",name:"PES Campus — Sports Ground Split",lat:12.861527329714084 ,lng:77.6646571393988}
+
+];
+
+
+// Add markers with image popup
+damageFeed.forEach(d=>{
+
+    L.marker([d.lat,d.lng])
+    .addTo(map)
+    .bindPopup(`
+        <b>${d.name}</b><br>
+        <img src="${d.img}" width="200">
+    `);
+
+});
+
+</script>
+
+</body>
+</html>

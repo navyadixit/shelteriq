@@ -128,7 +128,7 @@ def generate_situation_report(shelters):
 shelters = {
     1: {
         "name": "Shelter Alpha — Cubbon Park Relief Camp",
-        "capacity": 100,
+        "capacity": 45,
         "count": 0,          # updated live by YOLOv8 thread
         "lat": 12.9763,
         "lng": 77.5929,
@@ -138,7 +138,7 @@ shelters = {
     },
     2: {
         "name": "Shelter Beta — Lalbagh Relief Camp",
-        "capacity": 120,
+        "capacity": 60,
         "count": 45,         # static seed data
         "lat": 12.9507,
         "lng": 77.5848,
@@ -148,12 +148,99 @@ shelters = {
     },
     3: {
         "name": "Shelter Gamma — Kanteerava Stadium Camp",
-        "capacity": 110,
+        "capacity": 50,
         "count": 110,        # already at capacity — triggers alerts immediately
         "lat": 12.9716,
         "lng": 77.5946,
         "volunteers": 3,
         "medical_kits_available": 5,
         "zone": "Central Bengaluru"
+    },
+    4: {
+    "name": "Shelter Delta — Yelahanka Community Hall",
+    "capacity": 40,
+    "count": 60,
+    "lat": 13.1007,
+    "lng": 77.5963,
+    "volunteers": 7,
+    "medical_kits_available": 12,
+    "zone": "North Bengaluru"
+    },
+
+    5: {
+        "name": "Shelter Epsilon — Whitefield Sports Complex",
+        "capacity": 60,
+        "count": 72,
+        "lat": 12.9698,
+        "lng": 77.7500,
+        "volunteers": 9,
+        "medical_kits_available": 14,
+        "zone": "East Bengaluru"
+    },
+
+    6: {
+        "name": "Shelter Zeta — Electronic City Convention Hall",
+        "capacity": 80,
+        "count": 95,
+        "lat": 12.8399,
+        "lng": 77.6770,
+        "volunteers": 11,
+        "medical_kits_available": 15,
+        "zone": "South Bengaluru"
+    },
+
+    7: {
+        "name": "Shelter Eta — Rajajinagar Indoor Stadium",
+        "capacity": 100,
+        "count": 50,
+        "lat": 12.9916,
+        "lng": 77.5553,
+        "volunteers": 6,
+        "medical_kits_available": 10,
+        "zone": "West Bengaluru"
+    },
+
+    8: {
+        "name": "Shelter Theta — Hebbal Lake Grounds",
+        "capacity": 120,
+        "count": 65,
+        "lat": 13.0359,
+        "lng": 77.5970,
+        "volunteers": 7,
+        "medical_kits_available": 9,
+        "zone": "North Bengaluru"
+    },
+
+    9: {
+        "name": "Shelter Iota — Koramangala Indoor Arena",
+        "capacity": 75,
+        "count": 88,
+        "lat": 12.9279,
+        "lng": 77.6271,
+        "volunteers": 8,
+        "medical_kits_available": 11,
+        "zone": "South East Bengaluru"
+    },
+
+    10: {
+        "name": "Shelter Kappa — Banashankari Community Hall",
+        "capacity": 70,
+        "count": 54,
+        "lat": 12.9250,
+        "lng": 77.5468,
+        "volunteers": 6,
+        "medical_kits_available": 9,
+        "zone": "South West Bengaluru"
+    },
+
+    11: {
+        "name": "Shelter Lambda — KR Puram Grounds",
+        "capacity": 70,
+        "count": 102,
+        "lat": 13.0100,
+        "lng": 77.6950,
+        "volunteers": 10,
+        "medical_kits_available": 13,
+        "zone": "North East Bengaluru"
     }
 }

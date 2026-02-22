@@ -7,7 +7,7 @@ import sys
 # Load model
 model = models.mobilenet_v2(pretrained=False)
 model.classifier[1] = nn.Linear(model.last_channel, 3)
-model.load_state_dict(torch.load("model.pth", map_location="cpu"))
+model.load_state_dict(torch.load("backend/model.pth", map_location="cpu"))
 model.eval()
 
 classes = ["high", "low", "medium"]
