@@ -13,13 +13,15 @@ dataset/damage_feed/2.jpg,Electronic City — Infosys Gate,12.8452,77.6630
 dataset/damage_feed/3.jpg,Hebbal — Manyata Tech Park,13.0487,77.6206
 dataset/damage_feed/4.jpg,Rajajinagar — Orion Mall,12.9916,77.5553
 dataset/damage_feed/5.jpg,Koramangala — Forum Mall,12.9346,77.6110
-dataset/damage_feed/med1.jpg,PES-CAMPUS,12.862839,77.666162
-dataset/damage_feed/med1.jpg,PES-CAMPUS,12.863833093948626,77.6661834688842
+dataset/damage_feed/low1.jpg,PES-CAMPUS,12.862839,77.666162
+dataset/damage_feed/h1.jpg,PES-CAMPUS,12.863833093948626,77.6661834688842
 dataset/damage_feed/med1.jpg,PES-CAMPUS,12.862410576068834,77.66672526741425
-dataset/damage_feed/med1.jpg,PES-CAMPUS,12.861955589574704, 77.66486917167985
+dataset/damage_feed/h2.jpg,PES-CAMPUS,12.861955589574704, 77.66486917167985
 dataset/damage_feed/6.jpg,Yelahanka — Air Force Road,13.1050,77.6065
 dataset/damage_feed/7.jpg,Jayanagar — 4th Block,12.9252,77.5938
 dataset/damage_feed/8.jpg,Banashankari — BDA Complex,12.9180,77.5460
+dataset/damage_feed/1.jpg,PES-CAMPUS,12.861491392263751,77.66473479803018
+dataset/damage_feed/11.jpg,PES-CAMPUS,12.861527329714084,77.6646571393988
 dataset/damage_feed/9.jpg,Marathahalli — Bridge,12.9591,77.6974
 dataset/damage_feed/10.jpg,KR Puram — Old Madras Road,13.0050,77.6963
 dataset/damage_feed/11.jpg,Hebbal — Flyover,13.0353,77.5976
@@ -45,9 +47,7 @@ dataset/damage_feed/m6.jpg,Cunningham Road — Central,12.9900,77.5980
 
 dataset/damage_feed/med8.jpg,BTM Layout — 2nd Stage,12.9160,77.6100
 dataset/damage_feed/med9.jpg,Hosur Road — Silk Board,12.9170,77.6220
-dataset/damage_feed/med1.jpg,PES-CAMPUS,12.861491392263751,77.66473479803018
 
-dataset/damage_feed/med1.jpg,PES-CAMPUS,12.861527329714084,77.6646571393988
 dataset/damage_feed/h3.png,name:"Jigani — Industrial Area",12.7850,77.6460
 dataset/damage_feed/med3.jpg,name:"Jigani — APC Circle",12.7810,77.6410
 dataset/damage_feed/med2.jpg,Thanisandra — Main Road,13.0560,77.6270
