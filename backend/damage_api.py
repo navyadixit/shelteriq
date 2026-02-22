@@ -6,6 +6,7 @@ import torch.nn as nn
 from PIL import Image
 import io
 import math
+import csv
 import requests as http_requests
 from datetime import datetime
 
@@ -153,7 +154,6 @@ async def classify_damage(
 
     severity = classes[predicted]
 
-    # Find nearest hospital from real data
     infra = fetch_infrastructure()
     from shelters import shelters
 
@@ -189,6 +189,67 @@ async def classify_damage(
     return result
 
 
+@app.post("/process-bulk-damage")
+async def process_bulk_damage(file: UploadFile = File(...)):
+    contents = await file.read()
+    decoded = contents.decode("utf-8").splitlines()
+    reader = csv.DictReader(decoded)
+
+    results = []
+    infra = fetch_infrastructure()
+    from shelters import shelters
+
+    for row in reader:
+        # Handle different possible column name spellings
+        img_path = row.get("file_path") or row.get("filepath") or row.get("path") or row.get("image_path") or ""
+        name     = row.get("name") or row.get("location_name") or row.get("label") or "Unknown"
+        lat      = float(row.get("lat") or row.get("latitude") or 0)
+        lng      = float(row.get("lng") or row.get("longitude") or row.get("long") or 0)
+
+        # Run model on the image
+        try:
+            image = Image.open(img_path).convert("RGB")
+            tensor = transform(image).unsqueeze(0)
+            with torch.no_grad():
+                output = model(tensor)
+                probabilities = torch.softmax(output, dim=1)
+                predicted = torch.argmax(output, dim=1).item()
+                confidence = probabilities[0][predicted].item() * 100
+            severity = classes[predicted]
+        except Exception as e:
+            print(f"Could not classify image {img_path}: {e}")
+            severity = "LOW"
+            confidence = 0.0
+
+        # Find nearest hospital
+        if infra["hospitals"]:
+            nearest_hospital = min(infra["hospitals"], key=lambda h: calculate_distance(lat, lng, h["lat"], h["lng"]))
+            nearest_hospital_dist = calculate_distance(lat, lng, nearest_hospital["lat"], nearest_hospital["lng"])
+        else:
+            nearest_hospital = {"name": "Unavailable"}
+            nearest_hospital_dist = 0
+
+        # Find nearest shelter
+        nearest_shelter = min(shelters.values(), key=lambda s: calculate_distance(lat, lng, s["lat"], s["lng"]))
+        nearest_shelter_dist = calculate_distance(lat, lng, nearest_shelter["lat"], nearest_shelter["lng"])
+
+        result = {
+            "id": len(damage_assessments) + len(results) + 1,
+            "location_name": name,
+            "lat": lat,
+            "lng": lng,
+            "severity": severity,
+            "confidence": round(confidence, 1),
+            "timestamp": datetime.now().strftime("%H:%M %d %b"),
+            "nearest_hospital": {"name": nearest_hospital["name"], "distance_km": nearest_hospital_dist},
+            "nearest_shelter": {"name": nearest_shelter["name"], "distance_km": nearest_shelter_dist},
+        }
+        results.append(result)
+
+    damage_assessments.extend(results)
+    return results
+
+
 @app.get("/api/damage/all")
 def get_all_damage():
     priority = {"HIGH": 0, "MEDIUM": 1, "LOW": 2}
@@ -199,12 +260,3 @@ def get_all_damage():
 def get_locations():
     from locations import damage_locations
     return damage_locations
-
-
-# @app.get("/api/emergency-infrastructure")
-# async def get_emergency_infrastructure():
-#     try:
-#         data = fetch_infrastructure()
-#         return data
-#     except Exception as e:
-#         return {"error": str(e), "hospitals": [], "police": [], "fire_stations": []}

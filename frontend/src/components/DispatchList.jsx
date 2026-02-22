@@ -11,31 +11,48 @@ const textColor = {
   MEDIUM: "text-yellow-400",
   HIGH: "text-red-400",
 };
-function DispatchList({ onDelete, deletedIds = [], severityFilter = "ALL" }) {
+
+function DispatchList({ onDelete, deletedIds = [], severityFilter = "ALL", newMarker = null }) {
   const [items, setItems] = useState([]);
 
+  // Poll only refreshes EXISTING items — never dumps new ones in bulk
   const fetchDamage = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/damage/all");
+      const res = await fetch("http://localhost:8001/api/damage/all");
       const data = await res.json();
-      setItems(data);
+      setItems(prev => {
+        if (prev.length === 0) return prev;
+        const existingIds = new Set(prev.map(i => i.id));
+        return data.filter(d => existingIds.has(d.id));
+      });
     } catch (err) {
       console.error("Could not fetch damage list");
     }
   };
 
   useEffect(() => {
-    fetchDamage();
     const interval = setInterval(fetchDamage, 5000);
     return () => clearInterval(interval);
   }, []);
-   const visibleItems = items.filter(item => 
-   !deletedIds.includes(item.id) && 
-   (severityFilter === "ALL" || item.severity === severityFilter)
+
+  // New marker from CSV stagger or manual upload — add instantly, sorted by priority
+  useEffect(() => {
+    if (!newMarker) return;
+    setItems(prev => {
+      const alreadyExists = prev.some(item => item.id === newMarker.id);
+      if (alreadyExists) return prev;
+      const priority = { HIGH: 0, MEDIUM: 1, LOW: 2 };
+      const updated = [...prev, newMarker];
+      return updated.sort((a, b) => (priority[a.severity] ?? 3) - (priority[b.severity] ?? 3));
+    });
+  }, [newMarker]);
+
+  const visibleItems = items.filter(item =>
+    !deletedIds.includes(item.id) &&
+    (severityFilter === "ALL" || item.severity === severityFilter)
   );
 
   if (visibleItems.length === 0) {
-    
     return (
       <div className="bg-[#1e293b] rounded-xl p-5">
         <h3 className="font-semibold text-white mb-3">Priority Dispatch List</h3>

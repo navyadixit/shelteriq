@@ -72,6 +72,8 @@ const emptyRow = () => ({
 function DamageUpload({ onNewAssessment }) {
   const [rows, setRows] = useState([emptyRow()]);
   const [loading, setLoading] = useState(false);
+  const [csvLoading, setCsvLoading] = useState(false);
+  const [csvStatus, setCsvStatus] = useState(null);
 
   const updateRow = (index, changes) => {
     setRows(prev => prev.map((r, i) => i === index ? { ...r, ...changes } : r));
@@ -90,8 +92,48 @@ function DamageUpload({ onNewAssessment }) {
   };
 
   const addRow = () => setRows(prev => [...prev, emptyRow()]);
-
   const removeRow = (index) => setRows(prev => prev.filter((_, i) => i !== index));
+
+  // ── CSV bulk upload ──────────────────────────────────────────────────────────
+  const handleCSVUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setCsvLoading(true);
+    setCsvStatus("Sending to model...");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("http://localhost:8000/process-bulk-damage", {
+        method: "POST",
+        body: formData,
+      });
+
+      const allResults = await res.json();
+      setCsvStatus(`Adding ${allResults.length} locations to map...`);
+
+      // Drop one pin every 2 seconds
+      allResults.forEach((marker, index) => {
+        setTimeout(() => {
+          if (onNewAssessment) onNewAssessment(marker);
+          if (index === allResults.length - 1) {
+            setTimeout(() => setCsvStatus(null), 1500);
+          }
+        }, index * 2000);
+      });
+
+    } catch (err) {
+      console.error("CSV upload failed:", err);
+      setCsvStatus("Upload failed. Check console.");
+      setTimeout(() => setCsvStatus(null), 3000);
+    }
+
+    setCsvLoading(false);
+    e.target.value = "";
+  };
+  // ────────────────────────────────────────────────────────────────────────────
 
   const handleSubmit = async () => {
     const rowsWithFiles = rows.filter(r => r.file);
@@ -136,10 +178,7 @@ function DamageUpload({ onNewAssessment }) {
           <div className="flex items-center justify-between">
             <span className="text-slate-400 text-xs">Location {i + 1}</span>
             {rows.length > 1 && (
-              <button
-                onClick={() => removeRow(i)}
-                className="text-slate-500 hover:text-red-400 text-xs"
-              >
+              <button onClick={() => removeRow(i)} className="text-slate-500 hover:text-red-400 text-xs">
                 Remove
               </button>
             )}
@@ -199,6 +238,29 @@ function DamageUpload({ onNewAssessment }) {
       >
         {loading ? "Analysing..." : "Submit All"}
       </button>
+
+      {/* ── CSV Bulk Upload Section ── */}
+      <div className="border-t border-slate-700 pt-4 flex flex-col gap-2">
+        <p className="text-slate-500 text-xs uppercase tracking-widest">Bulk Feed from CSV</p>
+        <label className={`flex items-center justify-center gap-2 border border-blue-700 hover:border-blue-400
+                          text-blue-400 hover:text-blue-300 text-sm py-2 rounded-lg transition
+                          ${csvLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}>
+          📂 {csvLoading ? "Processing..." : "Upload damage_feed.csv"}
+          <input
+            type="file"
+            accept=".csv"
+            onChange={handleCSVUpload}
+            disabled={csvLoading}
+            className="hidden"
+          />
+        </label>
+        {csvStatus && (
+          <div className="flex items-center gap-2 bg-slate-900 rounded-lg px-3 py-2">
+            <span className="animate-pulse text-blue-400 text-xs">●</span>
+            <span className="text-slate-300 text-xs">{csvStatus}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

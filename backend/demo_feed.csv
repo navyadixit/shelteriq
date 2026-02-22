@@ -4,8 +4,7 @@ dataset/damage_feed/h5.jpg,Malleswaram — 8th Cross,13.0030,77.5650
 dataset/damage_feed/low1.jpg,Vijayanagar — Chord Road,12.9710,77.5310
 dataset/damage_feed/h1.png,Sadashivanagar — Palace Road,13.0050,77.5750
 dataset/damage_feed/h2.png,JP Nagar — 7th Phase,12.8980,77.5850
-
-dataset/damage_feed/low2.jpg,RT Nagar — Main Road,13.0220,77.5950
+dataset/damage_feed/low2.png,RT Nagar — Main Road,13.0220,77.5950
 dataset/damage_feed/low3.jpg,Nagarbhavi — Circle,12.9580,77.5080
 dataset/damage_feed/h3.png,Kalyan Nagar — HRBR Layout,13.0280,77.6480
 dataset/damage_feed/low4.jpg,Yelahanka — RMZ Galleria,13.0945,77.5967
@@ -14,14 +13,14 @@ dataset/damage_feed/3.jpg,Hebbal — Manyata Tech Park,13.0487,77.6206
 dataset/damage_feed/4.jpg,Rajajinagar — Orion Mall,12.9916,77.5553
 dataset/damage_feed/5.jpg,Koramangala — Forum Mall,12.9346,77.6110
 dataset/damage_feed/low1.jpg,PES-CAMPUS,12.862839,77.666162
-dataset/damage_feed/h1.jpg,PES-CAMPUS,12.863833093948626,77.6661834688842
-dataset/damage_feed/med1.jpg,PES-CAMPUS,12.862410576068834,77.66672526741425
-dataset/damage_feed/h2.jpg,PES-CAMPUS,12.861955589574704, 77.66486917167985
+dataset/damage_feed/h1.png,PES-CAMPUS,12.863833,77.666183
+dataset/damage_feed/med1.jpg,PES-CAMPUS,12.862410,77.666725
+dataset/damage_feed/h2.png,PES-CAMPUS,12.861955,77.664869
 dataset/damage_feed/6.jpg,Yelahanka — Air Force Road,13.1050,77.6065
 dataset/damage_feed/7.jpg,Jayanagar — 4th Block,12.9252,77.5938
 dataset/damage_feed/8.jpg,Banashankari — BDA Complex,12.9180,77.5460
-dataset/damage_feed/1.jpg,PES-CAMPUS,12.861491392263751,77.66473479803018
-dataset/damage_feed/11.jpg,PES-CAMPUS,12.861527329714084,77.6646571393988
+dataset/damage_feed/1.jpg,PES-CAMPUS,12.861491,77.664734
+dataset/damage_feed/11.jpg,PES-CAMPUS,12.861527,77.664657
 dataset/damage_feed/9.jpg,Marathahalli — Bridge,12.9591,77.6974
 dataset/damage_feed/10.jpg,KR Puram — Old Madras Road,13.0050,77.6963
 dataset/damage_feed/11.jpg,Hebbal — Flyover,13.0353,77.5976
@@ -31,32 +30,25 @@ dataset/damage_feed/14.jpg,Whitefield — Hope Farm,12.9875,77.7539
 dataset/damage_feed/15.jpg,Electronic City — Phase 2,12.8350,77.6750
 dataset/damage_feed/16.jpg,HSR Layout — Sector 2,12.9116,77.6370
 dataset/damage_feed/17.jpg,Indiranagar — 100 Feet Road,12.9784,77.6408
-
 dataset/damage_feed/h4.jpg,Bannerghatta Road — Gottigere,12.8470,77.5960
-
 dataset/damage_feed/low5.jpg,Whitefield — Kadugodi,12.9981,77.7580
 dataset/damage_feed/low6.jpg,Rajajinagar — 5th Block,12.9960,77.5565
 dataset/damage_feed/med1.jpg,Bommanahalli — Ring Road,12.8950,77.6270
-
 dataset/damage_feed/med5.jpg,Kengeri — Satellite Town,12.9130,77.4820
-dataset/damage_feed/med7.jpg,Hennur — Main Road,13.0430,77.6320
-dataset/damage_feed/low7.jpg,Hebbal — Lake Park,13.0400,77.6000
-dataset/damage_feed/low8.jpg,Electronic City — Neeladri Road,12.8406,77.6768
-dataset/damage_feed/low9.jpg,Domlur — Inner Ring Road,12.9600,77.6380
+dataset/damage_feed/med7.png,Hennur — Main Road,13.0430,77.6320
+dataset/damage_feed/low7.png,Hebbal — Lake Park,13.0400,77.6000
+dataset/damage_feed/low8.png,Electronic City — Neeladri Road,12.8406,77.6768
+dataset/damage_feed/low9.png,Domlur — Inner Ring Road,12.9600,77.6380
 dataset/damage_feed/m6.jpg,Cunningham Road — Central,12.9900,77.5980
-
 dataset/damage_feed/med8.jpg,BTM Layout — 2nd Stage,12.9160,77.6100
 dataset/damage_feed/med9.jpg,Hosur Road — Silk Board,12.9170,77.6220
-
-dataset/damage_feed/h3.png,name:"Jigani — Industrial Area",12.7850,77.6460
-dataset/damage_feed/med3.jpg,name:"Jigani — APC Circle",12.7810,77.6410
-dataset/damage_feed/med2.jpg,Thanisandra — Main Road,13.0560,77.6270
+dataset/damage_feed/h3.png,Jigani — Industrial Area,12.7850,77.6460
+dataset/damage_feed/med3.jpg,Jigani — APC Circle,12.7810,77.6410
+dataset/damage_feed/med2.png,Thanisandra — Main Road,13.0560,77.6270
 dataset/damage_feed/med3.jpg,Sarjapur Road — Outer Ring,12.9080,77.6760
 dataset/damage_feed/med4.jpg,Dollars Colony — RMV,13.0180,77.5870
-
-dataset/damage_feed/low8.jpg,name:"Sarjapur — Town Center",12.8600,77.7850
-dataset/damage_feed/h4.jpg,name:"Sarjapur — Main Road Collapse",12.8570,77.7700
-
-dataset/damage_feed/med2.jpg,name:"Bidadi — Industrial Zone",12.8000,77.3900
-dataset/damage_feed/low1.jpg,name:"Bidadi — Bus Stand",12.7970,77.3980
-dataset/damage_feed/med9.jpg,name:"Hosur Road — Silk Board",12.9170,77.6220
+dataset/damage_feed/low8.png,Sarjapur — Town Center,12.8600,77.7850
+dataset/damage_feed/h4.jpg,Sarjapur — Main Road Collapse,12.8570,77.7700
+dataset/damage_feed/med2.png,Bidadi — Industrial Zone,12.8000,77.3900
+dataset/damage_feed/low1.jpg,Bidadi — Bus Stand,12.7970,77.3980
+dataset/damage_feed/med9.jpg,Hosur Road — Silk Board 2,12.9175,77.6225
